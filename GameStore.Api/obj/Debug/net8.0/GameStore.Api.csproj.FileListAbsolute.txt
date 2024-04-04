@@ -24,3 +24,9 @@ c:\Users\Usuario\OneDrive\Documentos\programming\repos\My-projects\GameStore\Gam
 c:\Users\Usuario\OneDrive\Documentos\programming\repos\My-projects\GameStore\GameStore.Api\obj\Debug\net8.0\GameStore.Api.genruntimeconfig.cache
 c:\Users\Usuario\OneDrive\Documentos\programming\repos\My-projects\GameStore\GameStore.Api\obj\Debug\net8.0\ref\GameStore.Api.dll
 C:\Users\Usuario\OneDrive\Documentos\programming\repos\My-projects\GameStore\GameStore.Api\obj\Debug\net8.0\GameStore.Api.sourcelink.json
+C:\Users\Usuario\OneDrive\Documentos\programming\repos\My-projects\GameStore\GameStore.Api\bin\Debug\net8.0\Microsoft.OpenApi.dll
+C:\Users\Usuario\OneDrive\Documentos\programming\repos\My-projects\GameStore\GameStore.Api\bin\Debug\net8.0\MinimalApis.Extensions.dll
+C:\Users\Usuario\OneDrive\Documentos\programming\repos\My-projects\GameStore\GameStore.Api\bin\Debug\net8.0\MiniValidation.dll
+C:\Users\Usuario\OneDrive\Documentos\programming\repos\My-projects\GameStore\GameStore.Api\obj\Debug\net8.0\GameStore.Api.csproj.AssemblyReference.cache
+C:\Users\Usuario\OneDrive\Documentos\programming\repos\My-projects\GameStore\GameStore.Api\obj\Debug\net8.0\GameStore.Api.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\Usuario\OneDrive\Documentos\programming\repos\My-projects\GameStore\GameStore.Api\obj\Debug\net8.0\GameStor.5118A84D.Up2Date

@@ -31,8 +31,8 @@ public static class GamesEnpoints
 
     public static RouteGroupBuilder MapGamesEndpoints(this WebApplication app)
     {
-        //as we've been using "games" to define our routes, with MapGroup We can define the route just once and using it when it's neccesary
-        var group = app.MapGroup("games");
+        //as we've been using "games" to define our routes, with MapGroup We can define the route just once and using it when it's neccesary + WithParameterValidation() yo apply the required stuff we applied into our dtos
+        var group = app.MapGroup("games").WithParameterValidation();
 
         //GET /Games
         group.MapGet("/", () => games);
