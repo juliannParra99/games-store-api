@@ -1,4 +1,6 @@
-﻿using GameStore.Api.Dtos;
+﻿using GameStore.Api.Data;
+using GameStore.Api.Dtos;
+using GameStore.Api.Entities;
 
 namespace GameStore.Api.Endpoints;
 
@@ -47,18 +49,37 @@ public static class GamesEnpoints
         }).WithName(GetGameEndpointName);
 
         // POST /games
-        group.MapPost("/", (CreateGameDto newGame) =>
+        group.MapPost("/", (CreateGameDto newGame, GameStoreContext dbContext) =>
         {
-            GameDto game = new(
-                games.Count + 1,
-                newGame.Name,
-                newGame.Genre,
-                newGame.Price,
-                newGame.ReleaseDate);
+            // Create a new instance of Game with the data provided in newGame
 
-            games.Add(game);
+            Game game = new Game()
+            {
+                Name = newGame.Name,
+                Genre = dbContext.Genres.Find(newGame.GenreId),
+                GenreId = newGame.GenreId, //use foreing key
+                Price = newGame.Price,
+                ReleaseDate = newGame.ReleaseDate
 
-            return Results.CreatedAtRoute(GetGameEndpointName, new { id = game.Id }, game);
+            };
+            //add new game into the Db
+            dbContext.Games.Add(game);
+            //save changes into the database
+            dbContext.SaveChanges();
+
+
+            // Create a new GameDto object with the data of the newly created game
+            GameDto gameDto = new(
+                game.Id,
+                game.Name,
+                game.Genre!.Name,
+                game.Price,
+                game.ReleaseDate
+
+            );
+
+            // Return an HTTP 201 Created result along with the URL to access the newly created game
+            return Results.CreatedAtRoute(GetGameEndpointName, new { id = game.Id }, gameDto);
 
         });
 
