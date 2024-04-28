@@ -17,7 +17,8 @@ public static class GamesEnpoints
         var group = app.MapGroup("games").WithParameterValidation();
 
         //GET /Games
-        group.MapGet("/", async (GameStoreContext dbContext) => await dbContext.Games.Include(game => game.Genre).Select(game => game.ToGameSummaryDto()).AsNoTracking().ToListAsync());
+        group.MapGet("/", async (GameStoreContext dbContext) => await dbContext.Games.Include(game => game.Genre).Select(game => game.ToGameSummaryDto()).AsNoTracking().ToListAsync())
+            .RequireAuthorization();
 
         //GET /games/1
 
