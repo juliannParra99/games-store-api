@@ -1,4 +1,5 @@
 using System.Text;
+using GameStore.Api.Configurations;
 using GameStore.Api.Data;
 using GameStore.Api.Endpoints;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -10,6 +11,12 @@ var connString = builder.Configuration.GetConnectionString("GameStore");
 
 builder.Services.AddSqlite<GameStoreContext>(connString);
 
+//dependency injection
+// Configures the JwtConfig object using the JwtConfig section from the configuration file.
+// This allows the application to read JWT-related configuration settings, such as the token secret,
+// expiration time, issuer, and audience, from the appsettings.json file and bind them to the JwtConfig object.
+
+builder.Services.Configure<JwtConfig>(builder.Configuration.GetSection("JwtConfig"));
 
 
 //it set the authentication mechanism; first the authentication, later authorization
