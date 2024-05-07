@@ -3,6 +3,7 @@ using GameStore.Api.Configurations;
 using GameStore.Api.Data;
 using GameStore.Api.Endpoints;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -45,12 +46,17 @@ builder.Services.AddAuthentication(configureOptions: options =>
     };
 });
 
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false).AddEntityFrameworkStores<GameStoreContext>();
+
 
 builder.Services.AddAuthorization();
 var app = builder.Build();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+//this allow us to use the routes specified on our controllers
+app.MapControllers();
 
 app.MapGamesEndpoints();
 app.MapGenresEndpoints();
