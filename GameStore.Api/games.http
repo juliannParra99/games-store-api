@@ -2,6 +2,16 @@ GET http://localhost:5068/games
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6ImQ0ZDk4ZTQxLWIwYWQtNDRhYi04YzczLWRkYzg0MTZhOWE3MiIsInN1YiI6InBlZHJvQGdtYWlsLmNvbSIsImVtYWlsIjoicGVkcm9AZ21haWwuY29tIiwianRpIjoiODUyZGYwYmQtMGQ5Yi00NTllLTk2MWMtZDRhYTU5ZGM3Y2E4IiwiaWF0IjoxNzE1MTEzNDg3LCJuYmYiOjE3MTUxMTM0ODcsImV4cCI6MTcxNTExNzA4N30.cJQvg-3xztxNo_rkUxRMSv2k5xhacyLlklTmZ9GsLLg
 
 ###
+POST http://localhost:5068/api/Authentication/login
+Content-Type:  application/json
+
+{
+    
+    "Email":"pepepepa@gmail.com",
+    "Password":"Pasword23777146_"
+}
+
+###
 POST http://localhost:5068/api/Authentication/Register
 Content-Type: application/json
 

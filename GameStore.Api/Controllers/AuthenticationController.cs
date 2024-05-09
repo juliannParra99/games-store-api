@@ -7,6 +7,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using GameStore.Api.Configurations;
+using GameStore.Api.Dtos;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -41,6 +42,7 @@ namespace GameStore.Api.Controllers
         // Registers a new user by checking if the provided email is not already in use.
         // If the email is unique, creates a new user with the provided email and password.
         // Returns a BadRequest response if the email is already in use or if there is a server error.
+
         [HttpPost]
         [Route("Register")]
         public async Task<IActionResult> Register([FromBody] UserRegistrationRequestDto requestDto)
@@ -100,6 +102,63 @@ namespace GameStore.Api.Controllers
             }
 
             return BadRequest();
+
+        }
+
+        ///// Validates the login request and generates a JWT token for the user if the credentials are correct.
+        [Route("login")]
+        [HttpPost]
+        public async Task<IActionResult> Login([FromBody] UserLoginRequestDto loginRequest)
+        {
+            if (ModelState.IsValid)
+            {
+                //check if the user exists
+                var existing_user = await _userManager.FindByEmailAsync(loginRequest.Email);
+
+                if (existing_user == null)
+                {
+                    return BadRequest(new AuthResult()
+                    {
+                        Errors = new List<string>()
+                        {
+                            "Invalid Payload"
+                        },
+                        Result = false
+                    });
+                }
+
+                var isCorrect = await _userManager.CheckPasswordAsync(existing_user, loginRequest.Password);
+
+                if (!isCorrect)
+                {
+                    return BadRequest(new AuthResult()
+                    {
+                        Errors = new List<string>()
+                        {
+                            "Invalid Credentials"
+                        },
+                        Result = false
+                    });
+                }
+
+                //in case is correct
+                var jwtToken = GenerateJwtToken(existing_user);
+
+                return Ok(new AuthResult()
+                {
+                    Token = jwtToken,
+                    Result = true
+                });
+            }
+
+            return BadRequest(new AuthResult()
+            {
+                Errors = new List<string>()
+                {
+                    "Invalid Payload"
+                },
+                Result = false
+            });
 
         }
 
