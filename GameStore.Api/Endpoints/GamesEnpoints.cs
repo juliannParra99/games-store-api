@@ -2,6 +2,7 @@
 using GameStore.Api.Dtos;
 using GameStore.Api.Entities;
 using GameStore.Api.Mapping;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 
 namespace GameStore.Api.Endpoints;
@@ -18,7 +19,7 @@ public static class GamesEnpoints
 
         //GET /Games
         group.MapGet("/", async (GameStoreContext dbContext) => await dbContext.Games.Include(game => game.Genre).Select(game => game.ToGameSummaryDto()).AsNoTracking().ToListAsync())
-            .RequireAuthorization();
+            .RequireAuthorization(new AuthorizeAttribute());
 
         //GET /games/1
 

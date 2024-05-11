@@ -34,15 +34,21 @@ builder.Services.AddAuthentication(configureOptions: options =>
 })
 .AddJwtBearer(options =>
 {
+    var key = Encoding.ASCII.GetBytes(builder.Configuration.GetSection("JwtConfig:Secret").Value!);
+    // This line instructs the authentication middleware to store the JWT token in the authentication context after validating and decoding it. Useful if you needed in the future
+    options.SaveToken = true;
+    options.IncludeErrorDetails = true;
+
     options.TokenValidationParameters = new TokenValidationParameters
     {
-        ValidateIssuer = true, //sometime in local machine can  generate an error cause we're ussing http rather than https, so it could generate an error; so we could put it in false to solve it
-        ValidateAudience = true,
-        ValidateIssuerSigningKey = true,
+
+        ValidateIssuer = false, //sometime in local machine can  generate an error cause we're ussing http rather than https, so it could generate an error; so we could put it in false to solve it
+        ValidateAudience = false,
         ValidateLifetime = true,
-        ValidIssuer = builder.Configuration["Jwt:Issuer"],
-        ValidAudience = builder.Configuration["Jwt:Audience"],
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtConfig:Secret"]!))
+        ValidIssuer = builder.Configuration["JwtConfig:ValidIssuer"],
+        ValidAudience = builder.Configuration["JwtConfig:ValidAudiences"],
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(key),
     };
 });
 

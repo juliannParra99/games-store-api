@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using GameStore.Api.Configurations;
 using GameStore.Api.Dtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -20,6 +21,7 @@ namespace GameStore.Api.Controllers
 
     // Controller for handling user authentication requests in an ASP.NET Core API,
     // using UserManager<IdentityUser> for user management and JwtConfig for JWT configuration.
+    [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme)]
     [Route("api/[controller]")]
     [ApiController]
     public class AuthenticationController : ControllerBase
@@ -42,7 +44,7 @@ namespace GameStore.Api.Controllers
         // Registers a new user by checking if the provided email is not already in use.
         // If the email is unique, creates a new user with the provided email and password.
         // Returns a BadRequest response if the email is already in use or if there is a server error.
-
+        [AllowAnonymous]
         [HttpPost]
         [Route("Register")]
         public async Task<IActionResult> Register([FromBody] UserRegistrationRequestDto requestDto)
@@ -106,6 +108,7 @@ namespace GameStore.Api.Controllers
         }
 
         ///// Validates the login request and generates a JWT token for the user if the credentials are correct.
+        [AllowAnonymous]
         [Route("login")]
         [HttpPost]
         public async Task<IActionResult> Login([FromBody] UserLoginRequestDto loginRequest)
