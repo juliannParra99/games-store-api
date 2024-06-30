@@ -1,16 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using GameStore.Api.models.Entities;
 using GameStore.Api.Models.DTOs;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace GameStore.Api.Models.Entities
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext : IdentityDbContext<IdentityUser, IdentityRole, string>
     {
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<UserWishlist> UserWishlists { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
