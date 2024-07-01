@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using GameStore.Api.Models.DTOs;
 using GameStore.Api.Models.Entities;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,6 +13,8 @@ namespace GameStore.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+
     public class ProductsController : ControllerBase
     {
         // Private readonly field to store the database context

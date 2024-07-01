@@ -1,6 +1,7 @@
 using System.Text;
 using System.Text.Json.Serialization;
 using GameStore.Api.Configurations;
+using GameStore.Api.Configurations.JwtConf;
 using GameStore.Api.Models.Entities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -8,6 +9,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.Configure<JwtConfig>(builder.Configuration.GetSection("JwtConfig"));
 
 // Get the connection string from configuration
 var connString = builder.Configuration.GetConnectionString("DefaultConnection");
