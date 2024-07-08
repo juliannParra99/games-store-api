@@ -36,6 +36,7 @@ builder.Services.AddAuthentication(options =>
 })
 .AddJwtBearer(jwt =>
 {
+    jwt.IncludeErrorDetails = true;
     var key = Encoding.ASCII.GetBytes(builder.Configuration.GetSection("JwtConfig:Secret").Value!);
     jwt.SaveToken = true;
     jwt.IncludeErrorDetails = true;
@@ -50,11 +51,7 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-builder.Services.AddAuthorization(options =>
-{
-    options.AddPolicy("RequireUserRole", policy => policy.RequireRole("User"));
-    options.AddPolicy("RequireAdminRole", policy => policy.RequireRole("Admin"));
-});
+builder.Services.AddAuthorization();
 
 // Add necessary services
 builder.Services.AddControllers().AddJsonOptions(options =>
